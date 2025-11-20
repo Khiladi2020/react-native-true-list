@@ -1,6 +1,6 @@
 import { codegenNativeComponent, type ViewProps } from 'react-native';
 
-interface NativeProps extends ViewProps {
+export interface NativeProps extends ViewProps {
   items?: ReadonlyArray<string>;
   itemTemplate?: string;
   dataFitter?: string;

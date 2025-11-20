@@ -1,2 +1,2 @@
-export { default as TrueListView } from './TrueListViewNativeComponent';
+export { default as TrueListView } from './TrueList';
 export * from './TrueListViewNativeComponent';

@@ -3,13 +3,15 @@ import { TrueListView } from 'react-native-true-list';
 import BASIC_TEMPLATE1 from './templates/basic1';
 
 export default function App() {
+  const TEMPLATE = BASIC_TEMPLATE1;
+
   return (
     <View style={styles.container}>
       <TrueListView
         style={styles.box}
-        items={BASIC_TEMPLATE1.data.map((item) => JSON.stringify(item))}
-        dataFitter={JSON.stringify(BASIC_TEMPLATE1.dataFitter)}
-        itemTemplate={JSON.stringify(BASIC_TEMPLATE1.template)}
+        items={TEMPLATE.data}
+        dataFitter={TEMPLATE.dataFitter}
+        itemTemplate={TEMPLATE.template}
       />
     </View>
   );
