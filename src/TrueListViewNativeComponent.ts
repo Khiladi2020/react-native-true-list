@@ -1,7 +1,9 @@
 import { codegenNativeComponent, type ViewProps } from 'react-native';
 
 interface NativeProps extends ViewProps {
-  color?: string;
+  items?: ReadonlyArray<string>;
+  itemTemplate?: string;
+  dataFitter?: string;
 }
 
 export default codegenNativeComponent<NativeProps>('TrueListView');
