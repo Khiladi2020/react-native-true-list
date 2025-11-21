@@ -57,7 +57,9 @@ class MyAdapter: RecyclerView.Adapter<MyAdapter.ViewHolder>() {
     var view: View
     try {
       // 🚀 We wrap this in a try/catch as a final safety net
-      view = viewBuilderUtils.buildViewFromSpec(parent.context, templateSpec!!)
+      val viewResp = viewBuilderUtils.buildViewFromSpec(parent.context, templateSpec!!)
+      view = viewResp.first
+      view.layoutParams = viewResp.second
     } catch (e: Exception) {
       // If the builder fails, create a fallback TextView to show the error
       // This prevents the whole RecyclerView from crashing.
@@ -66,55 +68,6 @@ class MyAdapter: RecyclerView.Adapter<MyAdapter.ViewHolder>() {
       Log.d(Constants.TAG, "error in parsing the template ${e}")
       e.printStackTrace()
     }
-
-//        val view = viewBuilderUtils.buildViewFromSpec(parent.context, templateSpec!!)
-
-    // Apply root margins (from template root style) to the RecyclerView item view
-    try {
-      val rootStyle = templateSpec?.getMap("style")
-      if (rootStyle != null) {
-        val lp = RecyclerView.LayoutParams(
-          ViewGroup.LayoutParams.MATCH_PARENT,
-          ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-
-        val marginAll = if (rootStyle.hasKey("margin")) rootStyle.getInt("margin") else -1
-        val marginH = if (rootStyle.hasKey("marginHorizontal")) rootStyle.getInt("marginHorizontal") else -1
-        val marginV = if (rootStyle.hasKey("marginVertical")) rootStyle.getInt("marginVertical") else -1
-        val marginLeft = if (rootStyle.hasKey("marginLeft")) rootStyle.getInt("marginLeft") else -1
-        val marginRight = if (rootStyle.hasKey("marginRight")) rootStyle.getInt("marginRight") else -1
-        val marginTop = if (rootStyle.hasKey("marginTop")) rootStyle.getInt("marginTop") else -1
-        val marginBottom = if (rootStyle.hasKey("marginBottom")) rootStyle.getInt("marginBottom") else -1
-
-        val left = when {
-          marginLeft != -1 -> marginLeft
-          marginH != -1 -> marginH
-          marginAll != -1 -> marginAll
-          else -> 0
-        }
-        val right = when {
-          marginRight != -1 -> marginRight
-          marginH != -1 -> marginH
-          marginAll != -1 -> marginAll
-          else -> 0
-        }
-        val top = when {
-          marginTop != -1 -> marginTop
-          marginV != -1 -> marginV
-          marginAll != -1 -> marginAll
-          else -> 0
-        }
-        val bottom = when {
-          marginBottom != -1 -> marginBottom
-          marginV != -1 -> marginV
-          marginAll != -1 -> marginAll
-          else -> 0
-        }
-
-        lp.setMargins(left, top, right, bottom)
-        view.layoutParams = lp
-      }
-    } catch (_: Exception) { /* ignore */ }
 
     return ViewHolder(view)
   }
